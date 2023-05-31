@@ -4,9 +4,6 @@
 
 A example of Application Software Artifact that access Microsft Azure DevOPS to retrieve data.
 
-![alt text](debezium-architecture.png "Debezium")
-
-
 ## 📕 Documentation about entities 
 
 The Documentation can be found in this [link](./docs/README.md)
