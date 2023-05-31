@@ -1,12 +1,12 @@
 # Application Software Artifact That access Microsft Azure DevOPS
 ## Goal
-A example of Application Software Artifact That access Microsft Azure DevOPS to retrieve data.
+A example of Application Software Artifact that access Microsft Azure DevOPS to retrieve data.
 
-## Documentation
+## Documentation about entities 
 
 The Documentation can be found in this [link](./docs/README.md)
 
-## Generate documentation
+## Generate code documentation
 
 To create the code documentation:
 ```bash
