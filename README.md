@@ -1,5 +1,6 @@
+# Application Software Artifact That access Microsft Azure DevOPS
 ## Goal
-A lib to access data from Microsoft Azure DevOps.
+A example of Application Software Artifact That access Microsft Azure DevOPS to retrieve data.
 
 ## Documentation
 
