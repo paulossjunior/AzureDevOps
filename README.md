@@ -1,5 +1,3 @@
-# DevopsX
-
 ## Goal
 A lib to access data from Microsoft Azure DevOps.
 
@@ -18,13 +16,6 @@ pdoc --html --force azuredevopsX/ --output docs
 
 To accesss the documentation, go to folder docs/azuredevopsX and open index.html 
 	
-## Instalation
-
-To install devopsX, run this command in your terminal:
-```bash
-
-pip install azuredevopsX
-```
 
 ## Usage
 
