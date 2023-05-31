@@ -1,0 +1,103 @@
+@startuml
+class Project{
+	Integer:id
+	String:name
+	Project: get_projects()
+	Project: create (name)
+}
+
+Project "1" -- "0..*" WorkItem : materializes >
+Project "1" -- "0..*" Team : teams >
+Project "1" -- "0..*" Interaction : has >
+Project "1" -- "0..*" Backlog : backlog >
+
+class Backlog{
+	Integer:id
+	String:name
+	Backlog: get_backlog(project1, team2 )
+	Backlog: create(name)
+}
+
+
+class Team{
+	Integer:id
+	String:name
+	Team: get_teams(project_id1 )
+	Team: create(name, project_id)
+}
+
+Team "1" -- "0..*" TeamMember : composed_by >
+Team "1" -- "0..*" Interaction : work_in >
+Team "1" -- "0..*" WorkItem : implements >
+Team "1" -- "0..*" Backlog : backlog >
+
+class Interaction{
+	Integer:id
+	String:name
+	Date:start_date
+	Date:end_data
+	Interaction: get_interactions(project1, team2 )
+	Interaction: create(name, start_date, end_date)
+}
+
+Interaction "1" -- "0..*" WorkItem : implements >
+
+class TeamMember{
+	Integer:id
+	Boolean:admin
+	TeamMember: get_team_members(project_id1, team_id2 )
+	TeamMember: get_all_team_members_project()
+	TeamMember: create(identity,admin)
+}
+
+TeamMember "1" -- "1" Identity : refers_to >
+TeamMember "1" -- "0..*" WorkItem : creates >
+TeamMember "1" -- "0..*" WorkItem : activates >
+TeamMember "1" -- "0..*" WorkItem : closes >
+TeamMember "1" -- "0..*" WorkItem : assigned_to >
+
+class Identity{
+	Integer:id
+	String:name
+	Identity: create(name)
+}
+
+
+class WorkItem{
+	Integer:id
+	String:name
+	String:description
+	Integer:risk
+	String:story_point
+	Integer:priority
+	Date:created_date
+	Date:activated_date
+	Date:resolved_date
+	Date:closed_date
+	WorkItem: get_work_items(project_id1 )
+	WorkItem: get_work_item(work_item_id1, project_id2 )
+	WorkItem: get_work_item(work_item_id1, fields2, as_of3, expand4 )
+	WorkItem: get_relation(relation1 )
+	WorkItem: get_backlog_work_items(project1, team2, backlog3 )
+	WorkItem: get_work_item_query_by_wiql_epic_user_story_product_backlog_item()
+	WorkItem: get_work_item_query_by_wiql_task()
+	WorkItem: get_work_item_query_by_wiql()
+	WorkItem: create(name, description, risk, story_point, workitem_type)
+}
+
+WorkItem "1" -- "0..*" WorkItem : related_to >
+WorkItem "1" -- "1" WorkItemType : has >
+WorkItem "1" -- "1" Status : Status >
+
+class WorkItemType{
+	String:value
+}
+
+
+class Status{
+	String:value
+}
+
+
+
+@enduml

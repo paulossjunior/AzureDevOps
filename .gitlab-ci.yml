@@ -1,0 +1,45 @@
+stages:
+  - quality
+  - deploy
+
+quality:
+  stage: quality
+  image: 
+    name: sonarsource/sonar-scanner-cli:latest    
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
+    GIT_DEPTH: 0 # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: ${CI_JOB_NAME}
+    paths:
+      - .sonar/cache
+  script:
+     - sonar-scanner
+  only:
+    - master
+
+pypi:
+  image: docker.km3net.de/base/python:3
+  stage: deploy
+  cache: {}
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$VAR_SSH_PRIVATE_KEY" | ssh-add -
+    - git config --global user.email "${GIT_USER_EMAIL}"
+    - git config --global user.name "${GIT_NAME}"        
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - touch ~/.ssh/known_hosts
+    - echo 	"$KNOWN_HOSTS" >> ~/.ssh/known_hosts
+  script:
+    - pip install --upgrade pip
+    - pip install -U twine
+    - pip install --upgrade requests
+    - rm -rf dist build
+    - pip install commitizen
+    - cz bump --yes        
+    - python setup.py sdist        
+    - twine upload dist/* -u "${TWINE_USERNAME}" -p "${TWINE_PASSWORD}" --skip-existing
+  only:
+    - master

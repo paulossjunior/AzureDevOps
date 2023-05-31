@@ -1,0 +1,138 @@
+Configuration {
+	software: "DevOps"
+	about: "A lib to access data from Microsoft Azure DevOps."
+	lib_name: "devopsX"
+	}
+
+# "Represents a software Project"
+entity Project {
+	
+	id: Integer
+	name: String
+	
+	# "Returns a list of projects"
+	function get_projects(): Project
+	
+	materializes OneToMany WorkItem
+	teams OneToMany Team
+	has OneToMany Interaction	
+	backlog OneToMany Backlog
+}
+
+# "Represents a Backlog of project and Team"
+entity Backlog{
+	
+	id: Integer
+	name: String
+	
+	# "Return a backlog from a project and team"
+	function get_backlog(project, team): Backlog
+	
+}
+# "Represents the teams in a project"
+entity Team{
+	
+	id: Integer
+	name: String
+	
+	# "Returns the project's teams"
+	function get_teams (project_id): team
+	
+	composed_by OneToMany TeamMember 
+	work_in OneToMany Interaction
+	implements OneToMany WorkItem
+	backlog OneToMany Backlog
+	
+}
+# "Represent the time-box in a project s"
+entity Interaction {
+	
+	id: Integer
+	name: String
+	start_date: Date
+	end_data: Date
+	
+	# "Returns the interactions from a project and team"
+	function get_interactions(project, team): Interaction
+	
+	implements OneToMany WorkItem
+	
+}
+# "Represent a team member"
+entity TeamMember {
+	
+	id: Integer
+	admin: Boolean
+	
+	# "Returns the team member of project and team"
+	function get_team_members(project_id, team_id): TeamMember
+	
+	# "Returns all team member of project that user has access"
+	function get_all_team_members_project(): TeamMember
+	
+	refers_to OneToOne Identity
+	creates OneToMany WorkItem
+	activates OneToMany WorkItem 
+	closes OneToMany WorkItem
+	assigned_to OneToMany WorkItem 
+	
+}
+# "Represent a person x"
+entity Identity{
+	
+	id: Integer
+	name: String
+	
+}
+# "Represent a item of work in a project xxx"
+entity WorkItem {
+	id: Integer
+	name: String
+	description: String
+	risk: Integer
+	story_point: String
+	priority: Integer
+	created_date: Date
+	activated_date: Date
+	resolved_date: Date
+	closed_date: Date
+	
+	# "Return all workitems from a project"
+	function get_work_items(project_id): WorkItem
+	
+	# "Return one workitem from a project"
+	function get_work_item(work_item_id,project_id): WorkItem
+	
+	# "Return one workitem from a project with details"
+	function get_work_item(work_item_id,fields, as_of, expand): WorkItem
+	
+	# "Return all workitens with relationships"
+	function get_relation(relation): WorkItem
+	
+	# "Return all workitens from a backlog"
+	function get_backlog_work_items(project,team, backlog): WorkItem
+	
+	# "Return all Epic and Story from a backlog"
+	function get_work_item_query_by_wiql_epic_user_story_product_backlog_item(): WorkItem
+	
+	# "Return all Task"
+	function get_work_item_query_by_wiql_task(): WorkItem
+	
+	# "Return all workitems"
+	function get_work_item_query_by_wiql(): WorkItem
+	
+	related_to OneToMany WorkItem
+	has OneToOne WorkItemType
+	Status OneToOne Status
+	
+}
+# "Represent a type of Workitem "
+entity WorkItemType {
+	value: String
+	
+}
+# "Represent a status of Workitem "
+entity Status {
+	value: String
+}
+
