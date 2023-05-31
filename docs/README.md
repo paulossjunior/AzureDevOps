@@ -36,5 +36,3 @@
 * **get_work_item_query_by_wiql_task ()**: Return all Task
 * **get_work_item_query_by_wiql ()**: Return all workitems
 		
-## Copyright
-This lib was PowerRight by [SEON Application Lib Generator](https://gitlab.com/mdd_seon/from_application_conceptual_data_model_2_lib_application) 
