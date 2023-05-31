@@ -1,24 +1,30 @@
 # Application Software Artifact That access Microsft Azure DevOPS
-## Goal
+
+## 🚀 Goal
+
 A example of Application Software Artifact that access Microsft Azure DevOPS to retrieve data.
 
-## Documentation about entities 
+![alt text](debezium-architecture.png "Debezium")
+
+
+## 📕 Documentation about entities 
 
 The Documentation can be found in this [link](./docs/README.md)
 
-## Generate code documentation
+## 📕 Generate code documentation
 
 To create the code documentation:
 ```bash
 pdoc --html --force azuredevopsX/ --output docs
 
 ```
-### Acess code documentation	
+To accesss the documentation, go to folder docs/azuredevopsX and open index.html.
 
-To accesss the documentation, go to folder docs/azuredevopsX and open index.html 
-	
+## ⚙️ Requirements
 
-## Usage
+1. Python
+
+## 🔧 Usage
 
 ```python
 
